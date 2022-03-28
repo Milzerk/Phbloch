@@ -1,0 +1,17 @@
+{
+    "name": "phbloch/phbloch",
+    "description": "Bloch Chain usando PHP",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Phbloch\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Miller Kisley"
+        }
+    ],
+    "require": {}
+}

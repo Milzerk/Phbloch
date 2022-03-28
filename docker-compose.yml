@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+
+  ## PHP Container ############
+  app:
+    build:
+      context: ./
+      dockerfile: ./Docker/php/Dockerfile
+    container_name: template-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
