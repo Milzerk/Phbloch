@@ -36,7 +36,7 @@ class Block
         }
 
         $end_time = microtime(true);
-        $execution_time = ($end_time - $start_time) * 1000;
-        echo 'Block mined: ' . $this->hash . ' --:tempo de execução: ' . $execution_time . ' ms' . PHP_EOL;
+        $execution_time = ($end_time - $start_time);
+        echo 'Block mined: ' . $this->hash . ' -tempo: ' . $execution_time . ' s' . PHP_EOL;
     }
 }
