@@ -7,10 +7,10 @@ class Blockchain
     public $chain;
     public $difficulty;
 
-    public function __construct()
+    public function __construct($difficulty = 4)
     {
         $this->chain = [];
-        $this->difficulty = 4;
+        $this->difficulty = $difficulty;
         $this->createGenesisBlock();
     }
 
