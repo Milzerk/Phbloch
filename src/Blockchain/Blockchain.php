@@ -29,6 +29,7 @@ class Blockchain
         $newBlock->previousHash = $this->getLatestBlock()->hash;
         $newBlock->mineBlock($this->difficulty);
         $this->chain[] = $newBlock;
+        return $newBlock;
     }
 
     public function isChainValid()

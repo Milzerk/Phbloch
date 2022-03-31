@@ -11,14 +11,16 @@ class Block
     public $previousHash;
     public $hash;
     public $nonce;
+    public $difficulty;
 
-    public function __construct($index, $timestamp, $data, $previousHash = '')
+    public function __construct($index, $timestamp, $data, $difficulty, $previousHash = '')
     {
         $this->index = $index;
         $this->timestamp = $timestamp;
         $this->data = $data;
         $this->previousHash = $previousHash;
         $this->hash = $this->calculateHash();
+        $this->difficulty = $difficulty;
         $this->nonce = 0;
     }
 
@@ -29,20 +31,9 @@ class Block
 
     public function mineBlock($difficulty)
     {
-        $start_time = microtime(true);
-
         while (substr($this->hash, 0, $difficulty) !== str_repeat('0', $difficulty)) {
             $this->nonce++;
             $this->hash = $this->calculateHash();
-            // echo $this->nonce . PHP_EOL;
-        // system('clear');
-
         }
-        
-        $end_time = microtime(true);
-        system('clear');
-        $execution_time = ($end_time - $start_time);
-
-        echo 'Block mined: ' . $this->hash . ' -tempo: ' . $execution_time . ' s' . PHP_EOL;
     }
 }

@@ -5,27 +5,49 @@ use Phbloch\Blockchain\Blockchain;
 
 require_once './vendor/autoload.php';
 
-$phbloch = new Blockchain(4);
+system('clear');
 
-// $phbloch->addBlock(new Block(1, date('Y-m-d H:i:s'), 'Adriana paga miller - 50 R$'));
-// $phbloch->addBlock(new Block(2, date('Y-m-d H:i:s'), 'Adriana paga miller - 60 R$'));
-// $phbloch->addBlock(new Block(3, date('Y-m-d H:i:s'), 'Miller paga Adriana - 0,50 R$'));
-// $phbloch->addBlock(new Block(3, date('Y-m-d H:i:s'), 'Miller paga Thiago - 0,50 R$'));
+$dificuldade = 4;
+
+echo 'Pressione Ctrl+C para sair.' . PHP_EOL;
+$data = readline('Dificuldade do Blockchain: ');
+
+if (is_numeric($data)) {
+    $dificuldade = (int)$data;
+}
+
+$phbloch = new Blockchain($dificuldade);
 
 $sair = false;
 while (!$sair) {
 
     $data = readline('Conteúdo do Bloco: ');
-    $phbloch->addBlock(new Block(count($phbloch->chain) + 1, date('Y-m-d H:i:s'), $data));
 
-    echo PHP_EOL;
+    creatingBlock($phbloch, $data);
 
     if (!$phbloch->isChainValid()) {
         echo 'ERROR';
         $sair = true;
     }
+     
+    $blockchain = fopen("blockchain.json", "w");
+    fwrite($blockchain, json_encode($phbloch->chain, JSON_PRETTY_PRINT));
+    fclose($blockchain);
+}
 
-    echo json_encode($phbloch->chain, JSON_PRETTY_PRINT);
-    echo PHP_EOL;
 
+
+function creatingBlock(Blockchain $phbloch, $data): void
+{
+    $start_time = microtime(true);
+
+    $newBlock = new Block(count($phbloch->chain), date('Y-m-d H:i:s'), $data, $phbloch->difficulty);
+    $newBlock = $phbloch->addBlock($newBlock);
+
+    $end_time = microtime(true);
+    $execution_time = ($end_time - $start_time);
+    
+    $start_time = microtime(false);
+    $end_time = microtime(false);
+    echo 'Block mined: ' . $newBlock->hash . ' -tempo: ' . $execution_time . 's' . PHP_EOL;
 }
